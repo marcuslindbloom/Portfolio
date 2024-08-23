@@ -113,17 +113,6 @@
           "y": 0
         },
         {
-          "height": 16,
-          "id": 2,
-          "name": "exit",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 2.25,
-          "x": 0.5,
-          "y": 112.25
-        },
-        {
           "height": 5.75,
           "id": 36,
           "name": "toilet",
@@ -398,7 +387,6 @@
           "x": 336,
           "y": 128
         },
-
         {
           "height": 16,
           "id": 47,
@@ -410,6 +398,7 @@
           "x": 224,
           "y": 128
         },
+
         {
           "height": 16,
           "id": 48,
@@ -508,17 +497,6 @@
           "width": 16.5,
           "x": 16,
           "y": 64.5
-        },
-        {
-          "height": 0,
-          "id": 57,
-          "name": "",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 0,
-          "x": -41,
-          "y": 17.75
         },
         {
           "height": 15.5,
@@ -633,7 +611,7 @@
       ],
       "opacity": 1,
       "type": "objectgroup",
-      "visible": true,
+      "visible": false,
       "x": 0,
       "y": 0
     },
@@ -657,13 +635,43 @@
       ],
       "opacity": 1,
       "type": "objectgroup",
-      "visible": true,
+      "visible": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 8,
+      "name": "exits",
+      "objects": [
+        {
+          "height": 16,
+          "id": 70,
+          "name": "garden",
+          "properties": [
+            {
+              "name": "target",
+              "type": "string",
+              "value": "garden"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 3.70526315789474,
+          "x": 0.336842105263158,
+          "y": 112.336842105263
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": false,
       "x": 0,
       "y": 0
     }
   ],
-  "nextlayerid": 8,
-  "nextobjectid": 69,
+  "nextlayerid": 9,
+  "nextobjectid": 71,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.11.0",

@@ -1,6 +1,6 @@
 export enum KeyMap {
-    RIGHT = "right",
-    LEFT = "left",
-    UP = "up",
-    DOWN = "down"
+  RIGHT = 'right',
+  LEFT = 'left',
+  UP = 'up',
+  DOWN = 'down',
 }

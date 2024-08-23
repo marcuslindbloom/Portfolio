@@ -1,4 +1,4 @@
-import { createPlayer, setupControls } from "../utils/playerUtils";
+/*import { createPlayer, setupControls } from "../utils/playerUtils";
 import { createMap, loadMapData, processLayers } from "../utils/mapUtils";
 import { setupCamera } from "../utils/cameraUtils";
 import { setupEventHandlers } from "../utils/displayUtils";
@@ -14,5 +14,4 @@ export const mainScene = async () => {
     setupCamera(player);
     setupControls(player);
     setupEventHandlers(player);
-};
-
+};*/
