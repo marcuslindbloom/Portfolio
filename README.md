@@ -55,8 +55,7 @@ To add a new scene to the game, follow these steps:
 - **Dependencies**: This project relies on Kaboom.js, a fun and easy-to-use game programming library.
 - **Code Style**: Follow the existing code structure and naming conventions to maintain consistency across the project.
 - **Contributions**: Contributions are welcome! If you have ideas for new features or improvements, feel free to fork the repository and create a pull request.
-- **License**: This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-- **Contact**: For any questions or issues, please open an issue on the GitHub repository or contact me at your-email@example.com.
+- **Contact**: For any questions or issues, please open an issue on the GitHub repository or contact me at marcus.lindblom@me.com.
 
 ## Troubleshooting
 
