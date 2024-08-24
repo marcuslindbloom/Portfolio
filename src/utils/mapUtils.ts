@@ -1,5 +1,4 @@
-import { kbm } from '../kaboomCtx';
-import { GameObj } from 'kaboom';
+import { GameObj, KaboomCtx } from 'kaboom';
 import {
   SPRITES,
   LAYERS,
@@ -22,7 +21,7 @@ export const loadMapData = async (jsonResource: string): Promise<MapData> => {
 };
 
 // Create the map
-export const createMap = (): GameObj => {
+export const createMap = (kbm: KaboomCtx): GameObj => {
   return kbm.add([kbm.sprite(SPRITES.MAP), kbm.pos(0), kbm.scale(scaleFactor)]);
 };
 
@@ -32,18 +31,19 @@ export const processLayers = (
   layers: Layer[],
   map: GameObj,
   player: GameObj,
-  loadScene: (sceneName: string) => void
+  loadScene: (sceneName: string) => void,
+  kbm: KaboomCtx
 ) => {
   layers.forEach((layer) => {
     if (layer.name === LAYERS.BOUNDARIES) {
       const boundaryObjects = layer.objects.filter(
         (obj) => 'width' in obj && 'height' in obj
       ) as BoundaryObject[];
-      addBoundaries(boundaryObjects, map, player);
+      addBoundaries(boundaryObjects, map, player, kbm);
     } else if (layer.name === LAYERS.SPAWNPOINTS) {
-      setSpawnPoints(layer.objects as SpawnObject[], player);
+      setSpawnPoints(layer.objects as SpawnObject[], player, kbm);
     } else if (layer.name === LAYERS.EXITS) {
-      addExits(layer.objects as ExitObject[], map, player, loadScene);
+      addExits(layer.objects as ExitObject[], map, player, loadScene, kbm);
     }
   });
 };
@@ -52,7 +52,8 @@ export const processLayers = (
 export const addBoundaries = (
   objects: BoundaryObject[],
   map: GameObj,
-  player: GameObj
+  player: GameObj,
+  kbm: KaboomCtx
 ) => {
   objects.forEach((boundary) => {
     map.add([
@@ -78,7 +79,11 @@ export const addBoundaries = (
 };
 
 // Set spawn points for entities
-export const setSpawnPoints = (objects: SpawnObject[], player: GameObj) => {
+export const setSpawnPoints = (
+  objects: SpawnObject[],
+  player: GameObj,
+  kbm: KaboomCtx
+) => {
   objects.forEach((entity) => {
     if (entity.name === ENTITIES.PLAYER) {
       player.pos = kbm.vec2(entity.x * scaleFactor, entity.y * scaleFactor);
@@ -92,7 +97,8 @@ export const addExits = (
   objects: ExitObject[],
   map: GameObj,
   player: GameObj,
-  loadScene: (sceneName: string) => void
+  loadScene: (sceneName: string) => void,
+  kbm: KaboomCtx
 ) => {
   objects.forEach((exit) => {
     map.add([
@@ -113,7 +119,7 @@ export const addExits = (
       );
 
       if (targetProperty && targetProperty.value) {
-        loadScene(targetProperty.value); 
+        loadScene(targetProperty.value);
       }
     });
   });

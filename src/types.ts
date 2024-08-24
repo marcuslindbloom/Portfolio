@@ -1,4 +1,4 @@
-import { kbm } from './kaboomCtx';
+import { GameObj } from 'kaboom';
 
 // Type for the map data loaded from the JSON file
 export interface MapData {
@@ -33,12 +33,6 @@ export interface Player extends GameObj {
   direction: string;
   isInDialogue: boolean;
 }
-
-// Type for Kaboom game objects
-export type GameObj = ReturnType<typeof kbm.add>;
-
-// Kaboom context type
-export type KaboomCtx = typeof kbm;
 
 export interface MapLayer {
   name: string;

@@ -1,19 +1,18 @@
-import { kbm } from '../kaboomCtx';
 import { CAMERA_SCALE_FACTORS } from '../constants';
-import { GameObj } from 'kaboom';
+import { GameObj, KaboomCtx } from 'kaboom';
 
 // Set camera scale based on screen size
-export const setCamScale = (k: any): void => {
-  const resizeFactor = k.width() / k.height();
+export const setCamScale = (kbm: any): void => {
+  const resizeFactor = kbm.width() / kbm.height();
   if (resizeFactor < 1) {
-    k.camScale(k.vec2(CAMERA_SCALE_FACTORS.MIN));
+    kbm.camScale(kbm.vec2(CAMERA_SCALE_FACTORS.MIN));
   } else {
-    k.camScale(k.vec2(CAMERA_SCALE_FACTORS.MAX));
+    kbm.camScale(kbm.vec2(CAMERA_SCALE_FACTORS.MAX));
   }
 };
 
 // Setup camera to follow player
-export const setupCamera = (player: GameObj) => {
+export const setupCamera = (player: GameObj, kbm: KaboomCtx) => {
   setCamScale(kbm);
   kbm.onResize(() => {
     setCamScale(kbm);

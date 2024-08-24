@@ -1,4 +1,4 @@
-import { GameObj } from 'kaboom';
+import { GameObj, KaboomCtx } from 'kaboom';
 import {
   ANIMATIONS,
   DEFAULTS,
@@ -9,7 +9,6 @@ import {
   STYLES,
   TIMING,
 } from '../constants';
-import { kbm } from '../kaboomCtx';
 
 export const displayDialogue = (
   text: string,
@@ -55,7 +54,7 @@ export const displayDialogue = (
   });
 };
 
-export const setupEventHandlers = (player: GameObj) => {
+export const setupEventHandlers = (player: GameObj, kbm: KaboomCtx) => {
   const stopAnims = () => {
     if (player.direction === DIRECTIONS.DOWN) {
       player.play(ANIMATIONS.IDLE_DOWN);

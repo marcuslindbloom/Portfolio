@@ -1,8 +1,8 @@
-import { kbm } from '../kaboomCtx';
+import { KaboomCtx } from 'kaboom';
 import { SPRITES, ANIMATIONS, scaleFactor } from '../constants';
 import { ISceneConfig } from '../types';
 
-export const houseScene = (): ISceneConfig => {
+export const houseScene = (kbm: KaboomCtx): ISceneConfig => {
   const jsonFile = 'house.json';
   const pngFile = 'house.png';
 

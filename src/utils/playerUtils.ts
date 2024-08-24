@@ -1,5 +1,4 @@
-import { kbm } from '../kaboomCtx';
-import { GameObj, MouseButton } from 'kaboom';
+import { GameObj, KaboomCtx, MouseButton } from 'kaboom';
 import {
   ANIMATIONS,
   DIRECTIONS,
@@ -13,7 +12,7 @@ import {
 import { KeyMap } from '../enums';
 
 // Create the player
-export const createPlayer = (): GameObj => {
+export const createPlayer = (kbm: KaboomCtx): GameObj => {
   return kbm.make([
     kbm.sprite(SPRITES.SHEET, { anim: ANIMATIONS.IDLE_DOWN }),
     kbm.area({
@@ -32,7 +31,28 @@ export const createPlayer = (): GameObj => {
   ]);
 };
 
-export const setupControls = (player: GameObj) => {
+// Set the player animation based on direction
+const setPlayerAnimation = (
+  player: GameObj,
+  direction: string,
+  flipX: boolean = false
+) => {
+  const animationMap = {
+    [DIRECTIONS.UP]: ANIMATIONS.WALK_UP,
+    [DIRECTIONS.DOWN]: ANIMATIONS.WALK_DOWN,
+    [DIRECTIONS.LEFT]: ANIMATIONS.WALK_SIDE,
+    [DIRECTIONS.RIGHT]: ANIMATIONS.WALK_SIDE,
+  };
+
+  player.flipX = flipX;
+  const animation = animationMap[direction];
+  if (player.curAnim() !== animation) {
+    player.play(animation);
+  }
+  player.direction = direction;
+};
+
+export const setupControls = (player: GameObj, kbm: KaboomCtx) => {
   // Mouse controls
   kbm.onMouseDown((mouseBtn: MouseButton) => {
     if (mouseBtn !== INPUT.MOUSE_BUTTON_LEFT || player.isInDialogue) return;
@@ -42,103 +62,62 @@ export const setupControls = (player: GameObj) => {
 
     const mouseAngle = player.pos.angle(worldMousePos);
 
-    if (
-      mouseAngle > ANGLES.LOWER_BOUND &&
-      mouseAngle < ANGLES.UPPER_BOUND &&
-      player.curAnim() !== ANIMATIONS.WALK_UP
-    ) {
-      player.play(ANIMATIONS.WALK_UP);
-      player.direction = DIRECTIONS.UP;
-      return;
-    }
-
-    if (
+    if (mouseAngle > ANGLES.LOWER_BOUND && mouseAngle < ANGLES.UPPER_BOUND) {
+      setPlayerAnimation(player, DIRECTIONS.UP);
+    } else if (
       mouseAngle < -ANGLES.LOWER_BOUND &&
-      mouseAngle > -ANGLES.UPPER_BOUND &&
-      player.curAnim() !== ANIMATIONS.WALK_DOWN
+      mouseAngle > -ANGLES.UPPER_BOUND
     ) {
-      player.play(ANIMATIONS.WALK_DOWN);
-      player.direction = DIRECTIONS.DOWN;
-      return;
-    }
-
-    if (Math.abs(mouseAngle) > ANGLES.UPPER_BOUND) {
-      player.flipX = false;
-      if (player.curAnim() !== ANIMATIONS.WALK_SIDE)
-        player.play(ANIMATIONS.WALK_SIDE);
-      player.direction = DIRECTIONS.RIGHT;
-      return;
-    }
-
-    if (Math.abs(mouseAngle) < ANGLES.LOWER_BOUND) {
-      player.flipX = true;
-      if (player.curAnim() !== ANIMATIONS.WALK_SIDE)
-        player.play(ANIMATIONS.WALK_SIDE);
-      player.direction = DIRECTIONS.LEFT;
-      return;
+      setPlayerAnimation(player, DIRECTIONS.DOWN);
+    } else if (Math.abs(mouseAngle) > ANGLES.UPPER_BOUND) {
+      setPlayerAnimation(player, DIRECTIONS.RIGHT, false);
+    } else {
+      setPlayerAnimation(player, DIRECTIONS.LEFT, true);
     }
   });
 
   // Keyboard controls
   kbm.onKeyDown(() => {
-    const keyMap = {
-      right: kbm.isKeyDown(KeyMap.RIGHT),
-      left: kbm.isKeyDown(KeyMap.LEFT),
-      up: kbm.isKeyDown(KeyMap.UP),
-      down: kbm.isKeyDown(KeyMap.DOWN),
-    };
-
-    const nbOfKeyPressed = Object.values(keyMap).filter(Boolean).length;
-
-    if (nbOfKeyPressed > 1) return;
-
     if (player.isInDialogue) return;
 
-    if (keyMap.right) {
-      player.flipX = false;
-      if (player.curAnim() !== ANIMATIONS.WALK_SIDE)
-        player.play(ANIMATIONS.WALK_SIDE);
-      player.direction = DIRECTIONS.RIGHT;
-      player.move(player.speed, 0);
-      return;
-    }
+    const keyMap = {
+      [DIRECTIONS.RIGHT]: kbm.isKeyDown(KeyMap.RIGHT),
+      [DIRECTIONS.LEFT]: kbm.isKeyDown(KeyMap.LEFT),
+      [DIRECTIONS.UP]: kbm.isKeyDown(KeyMap.UP),
+      [DIRECTIONS.DOWN]: kbm.isKeyDown(KeyMap.DOWN),
+    };
 
-    if (keyMap.left) {
-      player.flipX = true;
-      if (player.curAnim() !== ANIMATIONS.WALK_SIDE)
-        player.play(ANIMATIONS.WALK_SIDE);
-      player.direction = DIRECTIONS.LEFT;
-      player.move(-player.speed, 0);
-      return;
-    }
+    const pressedDirection = Object.entries(keyMap).find(
+      ([_, pressed]) => pressed
+    )?.[0];
 
-    if (keyMap.up) {
-      if (player.curAnim() !== ANIMATIONS.WALK_UP)
-        player.play(ANIMATIONS.WALK_UP);
-      player.direction = DIRECTIONS.UP;
-      player.move(0, -player.speed);
-      return;
-    }
+    if (!pressedDirection) return;
 
-    if (keyMap.down) {
-      if (player.curAnim() !== ANIMATIONS.WALK_DOWN)
-        player.play(ANIMATIONS.WALK_DOWN);
-      player.direction = DIRECTIONS.DOWN;
-      player.move(0, player.speed);
-    }
+    const directionToMoveMap = {
+      [DIRECTIONS.RIGHT]: () => player.move(player.speed, 0),
+      [DIRECTIONS.LEFT]: () => player.move(-player.speed, 0),
+      [DIRECTIONS.UP]: () => player.move(0, -player.speed),
+      [DIRECTIONS.DOWN]: () => player.move(0, player.speed),
+    };
+
+    setPlayerAnimation(
+      player,
+      pressedDirection as string,
+      pressedDirection === DIRECTIONS.LEFT
+    );
+    directionToMoveMap[pressedDirection]?.();
   });
 
   // Handle stopping animations when keys or mouse are released
   const stopAnims = () => {
-    if (player.direction === DIRECTIONS.DOWN) {
-      player.play(ANIMATIONS.IDLE_DOWN);
-      return;
-    }
-    if (player.direction === DIRECTIONS.UP) {
-      player.play(ANIMATIONS.IDLE_UP);
-      return;
-    }
-    player.play(ANIMATIONS.IDLE_SIDE);
+    const idleAnimations = {
+      [DIRECTIONS.DOWN]: ANIMATIONS.IDLE_DOWN,
+      [DIRECTIONS.UP]: ANIMATIONS.IDLE_UP,
+      [DIRECTIONS.LEFT]: ANIMATIONS.IDLE_SIDE,
+      [DIRECTIONS.RIGHT]: ANIMATIONS.IDLE_SIDE,
+    };
+
+    player.play(idleAnimations[player.direction]);
   };
 
   kbm.onMouseRelease(stopAnims);
