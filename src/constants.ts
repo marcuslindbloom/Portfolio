@@ -1,7 +1,7 @@
 export const scaleFactor = 4;
 
 export const dialogueData = {
-  pc: `This is my Ubuntu machine, running with Regolith as the window manager. I primarily work with Java 17 and 21, and I'm proficient in using Spring Boot, TestContainers, and Apache Kafka. I’m also familiar with tools like Kubernetes, Terraform, Docker, and React. My setup is optimized for efficient development, whether I’m working on backend services or diving into infrastructure as code. It's a versatile environment that keeps me productive and ready to tackle any challenge.`,
+
   degree: `This here is my Bachelor in Business degree—a relic from the ancient times when solving business problems didn’t involve battling bugs and wrangling code. It's a constant reminder that even in the world of pixels and processors, there's always a business conundrum lurking around the corner, waiting to be outwitted.`,
   'sofa-table': `This is my sofa table, where I spend time reading books from the library and getting jumped on by the kids. It’s a busy spot in the house, full of activity and learning.`,
   tv: `The TV is mostly tuned to Peppa Pig for the kids, but when I get a chance, I like to watch some YouTube channels like <a href='https://www.youtube.com/@Computerphile' target='_blank'>Computerphile</a> and <a href='https://www.youtube.com/@coffeesoftware' target='_blank'>Coffee Software</a>, as well as talks by Josh Long.`,
@@ -16,7 +16,6 @@ export const dialogueData = {
   bones: `These bones are from yesterday’s dinner... at least, that’s what I keep telling myself. They’re supposed to be chicken, but they do look oddly human. Should I be concerned?`,
   fire: `There was no stove in the spritesheet, so I improvised with a cozy log fire instead. Who needs a modern kitchen when you can cook over an open flame? It's all about that rustic charm.`,
   toilet: `Apologies, but this house tour doesn’t include the bathrooms. Some things are best left to the imagination!`,
-  throne: `Ah, behold the mighty throne! But the true jewel in this crown isn't the chair — it's the Ultimate Hacking Keyboard II. Mmm... as smooth as a pirate's best rum and as satisfying as finding buried treasure. They say it's fully programmable, impeccably built, and open-source, split for your typing pleasure. Extreme productivity? Check. Ergonomics? Double check. And the best part? Precision mouse control right at your thumbs — no need to abandon the sacred home row. If keyboards were monarchs, this one would rule with an iron fist... of comfort.`,
   fridge: `My fridge is packed with delicious goodies, a testament to my 15 years in the hospitality industry. Cooking is my therapy—just don’t ask me to share my secret recipes!`,
   lamp: `It’s just a lamp, but it really ties the room together, don’t you think? Every game needs a good lighting source, even if it’s purely decorative.`,
   'baby-bed': `This is the baby’s bed, and let’s be honest—she’ll probably be the baby forever. It’s hard to let them grow up, even in a game.`,
@@ -28,7 +27,9 @@ export const dialogueData = {
   'no-wind-two': `Yup, same story here. No wind, no movement. It's almost like the windmills are on strike...`,
   'no-wind-three': `Did you seriously believe it changed? That's the kind of optimism that gets you through debugging.`,
   'no-wind-four': `Please give up already... The definition of insanity is doing the same thing over and over, expecting different results.`,
-  mystery: `Hmm, this desert is creeping into the landscape... The trees have been cut down, the well runs dry. I wonder what could have caused this? Perhaps a curse? Or maybe it's just the consequence of too much screen time... Could it be a long-lost treasure, buried deep under the sands, or something far more sinister? The truth lies just beyond the horizon, waiting for the brave (or the foolish) to uncover it...`,
+  pc: `This is my Ubuntu machine, running Regolith as the window manager. I work primarily with Java 17 and 21, Spring Boot, TestContainers, and Apache Kafka, and I get my way around with Kubernetes, Terraform, Docker, and React. It's a well-oiled setup, perfect for backend development or tackling infrastructure as code. Productivity guaranteed!`,
+  throne: `Ah, the mighty throne! But the real treasure here is the Ultimate Hacking Keyboard II — smooth as the finest rum, satisfying like buried gold. Fully programmable, split for comfort, and with precision mouse control at your thumbs. If keyboards were kings, this one would reign supreme.`,
+  mystery: `This desert creeps closer... trees gone, the well dry. A curse? Too much screen time? Or perhaps treasure buried beneath the sands, waiting for the bold or foolish to find? The truth lies just beyond the horizon...`,
 };
 
 // Scene names
